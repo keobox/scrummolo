@@ -1,5 +1,5 @@
-# scrummolo
-Helpers for scrum masters.
+# Token
+A standup meeting talking stick.
 
 Installation:
 - Create a Python virtualenv
