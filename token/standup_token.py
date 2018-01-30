@@ -1,19 +1,22 @@
 
 "A virtual talking stick."
 
+from random import shuffle
+
 import pyglet
 from pyglet.window import key
 
+import settings
+
 #index all resources. Resources folder must be on same level as this file.
-pyglet.resource.path = ['resources']
+pyglet.resource.path = settings.RESOURCES
 pyglet.resource.reindex()
 
 #create window object
 screen = pyglet.window.Window(800, 600)
 
 #create Team
-team = ["Player1", "Player2", "Player3", "Player4", "Player5", "Player6", "Player7"]
-from random import shuffle
+team = settings.TEAM
 shuffle(team)
 
 def resize(w, h, maxw, maxh):
@@ -29,6 +32,7 @@ def resize(w, h, maxw, maxh):
 #image dimensions
 W = 400
 H = 300
+HBORDER = 10
 
 def resize_image(image):
     "Resize but leave the ratio invariant."
@@ -43,10 +47,10 @@ for player in team:
     resize_image(player_image)
     player_images.append(player_image)
 
-game_over_image = pyglet.resource.image("applause.png")
+game_over_image = pyglet.resource.image(settings.GAME_OVER_IMAGE)
 resize_image(game_over_image)
 
-applause = pyglet.resource.media('applause.wav', streaming=False)
+applause = pyglet.resource.media(settings.GAME_OVER_SOUND, streaming=False)
 
 #create text labels for questions
 questions = ["On what I worked yesterday?", "On what I will work today?", "Do I have any blocker?"]
@@ -105,14 +109,14 @@ game = GameLogic(len(questions), len(team))
 def on_draw():
     screen.clear()
     if game.over():
-        game_over_image.blit(W, H)
+        game_over_image.blit(W, H - HBORDER)
         game_over_msg.draw()
         applause.play()
         game.goodbye()
     else:
         player_names[game.get_player()].draw()
         questions[game.get_question()].draw()
-        player_images[game.get_player()].blit(W, H)
+        player_images[game.get_player()].blit(W, H - HBORDER)
 
 @screen.event
 def on_key_press(symbol, modifiers):
