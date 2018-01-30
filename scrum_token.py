@@ -46,7 +46,7 @@ for player in team:
 game_over_image = pyglet.resource.image("applause.png")
 resize_image(game_over_image)
 
-applause = pyglet.resource.media('applause.wav')
+applause = pyglet.resource.media('applause.wav', streaming=False)
 
 #create text labels for questions
 questions = ["On what I worked yesterday?", "On what I will work today?", "Do I have any blocker?"]
