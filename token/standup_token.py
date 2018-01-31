@@ -30,13 +30,13 @@ def resize(width, height, max_width, max_height):
     return max_width, height*max_width/width
 
 #image dimensions
-W = 400
-H = 300
-HBORDER = 10
+WIDTH = 400
+HEIGHT = 300
+HEIGHT_BORDER = 10
 
 def resize_image(image):
     "Resize but leave the ratio invariant."
-    width, height = resize(image.width, image.height, W, H)
+    width, height = resize(image.width, image.height, WIDTH, HEIGHT)
     image.width = width
     image.height = height
 
@@ -50,12 +50,13 @@ for player in TEAM:
 GAME_OVER_IMAGE = pyglet.resource.image(settings.GAME_OVER_IMAGE)
 resize_image(GAME_OVER_IMAGE)
 GAME_OVER_SOUND = pyglet.resource.media(settings.GAME_OVER_SOUND, streaming=False)
+
 #create text labels for questions
 QUESTIONS = ["On what I worked yesterday?", "On what I will work today?", "Do I have any blocker?"]
 QUESTIONS = [pyglet.text.Label(text="{0}".format(q), font_size=36, x=100, y=100) for q in QUESTIONS]
 
 PLAYER_MESSAGES = [pyglet.text.Label(text="{0}, is your turn!".format(name),
-                   font_size=18, x=100, y=500) for name in TEAM]
+                  font_size=18, x=100, y=500) for name in TEAM]
 GAME_OVER_MESSAGE = pyglet.text.Label(text="That's all Folks, Thank You!",
                                       font_size=36, x=100, y=100)
 
@@ -109,14 +110,14 @@ def on_draw():
     """Window draw event handler."""
     SCREEN.clear()
     if GAME.over():
-        GAME_OVER_IMAGE.blit(W, H - HBORDER)
+        GAME_OVER_IMAGE.blit(WIDTH, HEIGHT - HEIGHT_BORDER)
         GAME_OVER_MESSAGE.draw()
         GAME_OVER_SOUND.play()
         GAME.goodbye()
     else:
         PLAYER_MESSAGES[GAME.get_player()].draw()
         QUESTIONS[GAME.get_question()].draw()
-        PLAYER_IMAGES[GAME.get_player()].blit(W, H - HBORDER)
+        PLAYER_IMAGES[GAME.get_player()].blit(WIDTH, HEIGHT - HEIGHT_BORDER)
 
 @SCREEN.event
 def on_key_press(symbol, modifiers):
