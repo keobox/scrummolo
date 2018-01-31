@@ -60,4 +60,5 @@ target/
 .DS_Store
 resources/
 *.bak
+.vscode/
 

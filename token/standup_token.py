@@ -13,21 +13,21 @@ pyglet.resource.path = settings.RESOURCES
 pyglet.resource.reindex()
 
 #create window object
-screen = pyglet.window.Window(800, 600)
+SCREEN = pyglet.window.Window(800, 600)
 
 #create Team
-team = settings.TEAM
-shuffle(team)
+TEAM = settings.TEAM
+shuffle(TEAM)
 
-def resize(w, h, maxw, maxh):
+def resize(width, height, max_width, max_height):
     "Calculates new width and height but leave w/h ratio invariant."
-    dw = w - maxw
-    dh = h - maxh
-    if dh <= 0 and dw <= 0:
-        return w, h
-    if dh >= dw:
-        return w*maxh/h, maxh
-    return maxw, h*maxw/w
+    delta_width = width - max_width
+    delta_height = height - max_height
+    if delta_height <= 0 and delta_width <= 0:
+        return width, height
+    if delta_height >= delta_width:
+        return width*max_height/height, max_height
+    return max_width, height*max_width/width
 
 #image dimensions
 W = 400
@@ -36,29 +36,28 @@ HBORDER = 10
 
 def resize_image(image):
     "Resize but leave the ratio invariant."
-    w, h = resize(image.width, image.height, W, H)
-    image.width = w
-    image.height = h
+    width, height = resize(image.width, image.height, W, H)
+    image.width = width
+    image.height = height
 
 #create player objects. Player image must be in resource folder.
-player_images = []
-for player in team:
+PLAYER_IMAGES = []
+for player in TEAM:
     player_image = pyglet.resource.image(player.lower() + ".png")
     resize_image(player_image)
-    player_images.append(player_image)
+    PLAYER_IMAGES.append(player_image)
 
-game_over_image = pyglet.resource.image(settings.GAME_OVER_IMAGE)
-resize_image(game_over_image)
-
-applause = pyglet.resource.media(settings.GAME_OVER_SOUND, streaming=False)
-
+GAME_OVER_IMAGE = pyglet.resource.image(settings.GAME_OVER_IMAGE)
+resize_image(GAME_OVER_IMAGE)
+GAME_OVER_SOUND = pyglet.resource.media(settings.GAME_OVER_SOUND, streaming=False)
 #create text labels for questions
-questions = ["On what I worked yesterday?", "On what I will work today?", "Do I have any blocker?"]
-questions = [pyglet.text.Label(text="{0}".format(q), font_size=36, x=100, y=100) for q in questions]
+QUESTIONS = ["On what I worked yesterday?", "On what I will work today?", "Do I have any blocker?"]
+QUESTIONS = [pyglet.text.Label(text="{0}".format(q), font_size=36, x=100, y=100) for q in QUESTIONS]
 
-player_names = [pyglet.text.Label(text="{0}, is your turn!".format(name), font_size=18, x=100, y=500) for name in team]
-
-game_over_msg = pyglet.text.Label(text="That's all Folks, Thank You!", font_size=36, x=100, y=100)
+PLAYER_MESSAGES = [pyglet.text.Label(text="{0}, is your turn!".format(name),
+                   font_size=18, x=100, y=500) for name in TEAM]
+GAME_OVER_MESSAGE = pyglet.text.Label(text="That's all Folks, Thank You!",
+                                      font_size=36, x=100, y=100)
 
 class GameLogic(object):
     "Game Logic"
@@ -103,27 +102,29 @@ class GameLogic(object):
         "Check if is time to exit."
         return self.bye
 
-game = GameLogic(len(questions), len(team))
+GAME = GameLogic(len(QUESTIONS), len(TEAM))
 
-@screen.event
+@SCREEN.event
 def on_draw():
-    screen.clear()
-    if game.over():
-        game_over_image.blit(W, H - HBORDER)
-        game_over_msg.draw()
-        applause.play()
-        game.goodbye()
+    """Window draw event handler."""
+    SCREEN.clear()
+    if GAME.over():
+        GAME_OVER_IMAGE.blit(W, H - HBORDER)
+        GAME_OVER_MESSAGE.draw()
+        GAME_OVER_SOUND.play()
+        GAME.goodbye()
     else:
-        player_names[game.get_player()].draw()
-        questions[game.get_question()].draw()
-        player_images[game.get_player()].blit(W, H - HBORDER)
+        PLAYER_MESSAGES[GAME.get_player()].draw()
+        QUESTIONS[GAME.get_question()].draw()
+        PLAYER_IMAGES[GAME.get_player()].blit(W, H - HBORDER)
 
-@screen.event
+@SCREEN.event
 def on_key_press(symbol, modifiers):
+    """Key pressed event handler."""
     if symbol == key.SPACE:
-        if game.said_goodbye():
+        if GAME.said_goodbye():
             pyglet.app.exit()
-        game.step()
+        GAME.step()
 
 if __name__ == "__main__":
     pyglet.app.run()
