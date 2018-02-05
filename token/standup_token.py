@@ -123,7 +123,7 @@ class Timer:
             self.label.text = "{:02d}:{:02d}".format(self.mins, self.secs)
             self.tick = 0
 
-DURATION = 20
+DURATION = settings.DURATION
 TIME_LABEL = pyglet.text.Label(text="{:02d}:00".format(DURATION), font_size=36, x=100, y=300)
 TIMER = Timer(DURATION, TIME_LABEL)
 
