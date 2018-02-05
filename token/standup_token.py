@@ -105,6 +105,25 @@ class GameLogic(object):
 
 GAME = GameLogic(len(QUESTIONS), len(TEAM))
 
+class Timer:
+    """Timer class"""
+
+    def __init__(self, duration, label):
+        """Constructor."""
+        self.duration = duration * 60
+        self.label = label
+
+    def update(self, delta_time):
+        """Update timer."""
+        if self.duration > 0:
+            self.duration -= 1
+            self.mins, self.secs = divmod(self.duration, 60)
+            self.label.text = "{:02d}:{:02d}".format(self.mins, self.secs)
+
+DURATION = 20
+TIME_LABEL = pyglet.text.Label(text="{:02d}:00".format(DURATION), font_size=36, x=100, y=300)
+TIMER = Timer(DURATION, TIME_LABEL)
+
 @SCREEN.event
 def on_draw():
     """Window draw event handler."""
@@ -118,6 +137,7 @@ def on_draw():
         PLAYER_MESSAGES[GAME.get_player()].draw()
         QUESTIONS[GAME.get_question()].draw()
         PLAYER_IMAGES[GAME.get_player()].blit(WIDTH, HEIGHT - HEIGHT_BORDER)
+        TIMER.label.draw()
 
 @SCREEN.event
 def on_key_press(symbol, modifiers):
@@ -128,4 +148,5 @@ def on_key_press(symbol, modifiers):
         GAME.step()
 
 if __name__ == "__main__":
+    pyglet.clock.schedule_interval(TIMER.update, 1)
     pyglet.app.run()

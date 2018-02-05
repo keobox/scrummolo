@@ -3,5 +3,5 @@
 
 TEAM = ["Cesare", "Stefano", "Roberto", "Lgiubert", "Lugalli", "Alessandra", "Alessandro"]
 RESOURCES = ['resources']
-GAME_OVER_IMAGE = "applause.png"
-GAME_OVER_SOUND = "applause.wav"
+GAME_OVER_IMAGE = "gameover.png"
+GAME_OVER_SOUND = "gameover.wav"
