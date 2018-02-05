@@ -131,8 +131,9 @@ def on_draw():
     if GAME.over():
         GAME_OVER_IMAGE.blit(WIDTH, HEIGHT - HEIGHT_BORDER)
         GAME_OVER_MESSAGE.draw()
-        GAME_OVER_SOUND.play()
-        GAME.goodbye()
+        if not GAME.said_goodbye():
+            GAME_OVER_SOUND.play()
+            GAME.goodbye()
     else:
         PLAYER_MESSAGES[GAME.get_player()].draw()
         QUESTIONS[GAME.get_question()].draw()
