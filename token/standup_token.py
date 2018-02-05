@@ -112,13 +112,16 @@ class Timer:
         """Constructor."""
         self.duration = duration * 60
         self.label = label
+        self.tick = 0.0
 
     def update(self, delta_time):
         """Update timer."""
-        if self.duration > 0:
+        self.tick = self.tick + delta_time
+        if self.tick > 1.0 and self.duration > 0:
             self.duration -= 1
             self.mins, self.secs = divmod(self.duration, 60)
             self.label.text = "{:02d}:{:02d}".format(self.mins, self.secs)
+            self.tick = 0
 
 DURATION = 20
 TIME_LABEL = pyglet.text.Label(text="{:02d}:00".format(DURATION), font_size=36, x=100, y=300)
@@ -149,5 +152,5 @@ def on_key_press(symbol, modifiers):
         GAME.step()
 
 if __name__ == "__main__":
-    pyglet.clock.schedule_interval(TIMER.update, 1)
+    pyglet.clock.schedule_interval(TIMER.update, 0.1)
     pyglet.app.run()
