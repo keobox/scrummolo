@@ -26,8 +26,8 @@ def resize(width, height, max_width, max_height):
     if delta_height <= 0 and delta_width <= 0:
         return width, height
     if delta_height >= delta_width:
-        return width*max_height/height, max_height
-    return max_width, height*max_width/width
+        return width * max_height / height, max_height
+    return max_width, height * max_width / width
 
 #image dimensions
 WIDTH = 400
@@ -47,8 +47,39 @@ for player in TEAM:
     resize_image(player_image)
     PLAYER_IMAGES.append(player_image)
 
-GAME_OVER_IMAGE = pyglet.resource.image(settings.GAME_OVER_IMAGE)
-resize_image(GAME_OVER_IMAGE)
+class GameOverAnimation:
+    """Animation for GIF files."""
+
+    def __init__(self):
+        """Constructor."""
+        animation = pyglet.resource.animation(settings.GAME_OVER_IMAGE)
+        self.sprite = pyglet.sprite.Sprite(animation, 0, HEIGHT * 2 // 3)
+
+    def draw(self):
+        """Draw game over animation."""
+        self.sprite.draw()
+
+
+class GameOverImage:
+    """Image for PNG files."""
+
+    def __init__(self):
+        """Constructor."""
+        self.image = pyglet.resource.image(settings.GAME_OVER_IMAGE)
+        resize_image(self.image)
+
+    def draw(self):
+        """Draw game over animation."""
+        self.image.blit(WIDTH, HEIGHT - HEIGHT_BORDER)
+
+
+def create_game_over_image(image_path):
+    if image_path.split('.')[1] == 'gif':
+        return GameOverAnimation()
+    else:
+        return GameOverImage()
+
+GAME_OVER_IMAGE = create_game_over_image(settings.GAME_OVER_IMAGE)
 GAME_OVER_SOUND = pyglet.resource.media(settings.GAME_OVER_SOUND, streaming=False)
 
 #create text labels for questions
@@ -132,7 +163,7 @@ def on_draw():
     """Window draw event handler."""
     SCREEN.clear()
     if GAME.over():
-        GAME_OVER_IMAGE.blit(WIDTH, HEIGHT - HEIGHT_BORDER)
+        GAME_OVER_IMAGE.draw()
         GAME_OVER_MESSAGE.draw()
         if not GAME.said_goodbye():
             GAME_OVER_SOUND.play()
