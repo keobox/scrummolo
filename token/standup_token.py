@@ -13,7 +13,9 @@ pyglet.resource.path = settings.RESOURCES
 pyglet.resource.reindex()
 
 #create window object
-SCREEN = pyglet.window.Window(800, 600)
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = 600
+SCREEN = pyglet.window.Window(SCREEN_WIDTH, SCREEN_HEIGHT)
 
 #create Team
 TEAM = settings.TEAM
@@ -30,8 +32,8 @@ def resize(width, height, max_width, max_height):
     return max_width, height * max_width / width
 
 #image dimensions
-WIDTH = 400
-HEIGHT = 300
+WIDTH = SCREEN_WIDTH // 2
+HEIGHT = SCREEN_HEIGHT // 2
 HEIGHT_BORDER = 10
 
 def resize_image(image):
@@ -50,10 +52,10 @@ for player in TEAM:
 class GameOverAnimation:
     """Animation for GIF files."""
 
-    def __init__(self):
+    def __init__(self, animation_resource_name, pos_x, pos_y):
         """Constructor."""
-        animation = pyglet.resource.animation(settings.GAME_OVER_IMAGE)
-        self.sprite = pyglet.sprite.Sprite(animation, 0, HEIGHT * 2 // 3)
+        animation = pyglet.resource.animation(animation_resource_name)
+        self.sprite = pyglet.sprite.Sprite(animation, pos_x, pos_y)
 
     def draw(self):
         """Draw game over animation."""
@@ -63,21 +65,23 @@ class GameOverAnimation:
 class GameOverImage:
     """Image for PNG files."""
 
-    def __init__(self):
+    def __init__(self, image_resource_name, pos_x, pos_y):
         """Constructor."""
-        self.image = pyglet.resource.image(settings.GAME_OVER_IMAGE)
+        self.image = pyglet.resource.image(image_resource_name)
         resize_image(self.image)
+        self.pos_x = pos_x
+        self.pos_y = pos_y
 
     def draw(self):
         """Draw game over animation."""
-        self.image.blit(WIDTH, HEIGHT - HEIGHT_BORDER)
+        self.image.blit(self.pos_x, self.pos_y)
 
 
 def create_game_over_image(image_path):
     if image_path.split('.')[1] == 'gif':
-        return GameOverAnimation()
+        return GameOverAnimation(settings.GAME_OVER_IMAGE, 0, HEIGHT * 2 // 3)
     else:
-        return GameOverImage()
+        return GameOverImage(settings.GAME_OVER_IMAGE, WIDTH, HEIGHT - HEIGHT_BORDER)
 
 GAME_OVER_IMAGE = create_game_over_image(settings.GAME_OVER_IMAGE)
 GAME_OVER_SOUND = pyglet.resource.media(settings.GAME_OVER_SOUND, streaming=False)
