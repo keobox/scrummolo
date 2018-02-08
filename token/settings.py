@@ -1,7 +1,8 @@
 
 """Talking stick configurations."""
 
-TEAM = ["Cesare", "Stefano", "Roberto", "Lgiubert", "Lugalli", "Alessandra", "Alessandro"]
+# TEAM = ["Lgiubert", "Stefano", "Roberto", "Cesare", "Lugalli", "Alessandra", "Alessandro"]
+TEAM = ["Lgiubert", "Stefano", "Roberto", "Cesare", "Lugalli", "Alessandra"]
 DURATION = 20
 RESOURCES = ['resources']
 GAME_OVER_IMAGE = "gameover.png"

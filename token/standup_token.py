@@ -26,8 +26,8 @@ def resize(width, height, max_width, max_height):
     if delta_height <= 0 and delta_width <= 0:
         return width, height
     if delta_height >= delta_width:
-        return width*max_height/height, max_height
-    return max_width, height*max_width/width
+        return width * max_height / height, max_height
+    return max_width, height * max_width / width
 
 #image dimensions
 WIDTH = 400
@@ -49,6 +49,8 @@ for player in TEAM:
 
 GAME_OVER_IMAGE = pyglet.resource.image(settings.GAME_OVER_IMAGE)
 resize_image(GAME_OVER_IMAGE)
+# GAME_OVER_IMAGE = pyglet.resource.animation(settings.GAME_OVER_IMAGE)
+# GAME_OVER_IMAGE = pyglet.sprite.Sprite(GAME_OVER_IMAGE, 0, 200)
 GAME_OVER_SOUND = pyglet.resource.media(settings.GAME_OVER_SOUND, streaming=False)
 
 #create text labels for questions
@@ -133,6 +135,7 @@ def on_draw():
     SCREEN.clear()
     if GAME.over():
         GAME_OVER_IMAGE.blit(WIDTH, HEIGHT - HEIGHT_BORDER)
+        # GAME_OVER_IMAGE.draw()
         GAME_OVER_MESSAGE.draw()
         if not GAME.said_goodbye():
             GAME_OVER_SOUND.play()
