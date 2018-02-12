@@ -162,10 +162,13 @@ DURATION = settings.DURATION
 TIME_LABEL = pyglet.text.Label(text="{:02d}:00".format(DURATION), font_size=36, x=100, y=300)
 TIMER = Timer(DURATION, TIME_LABEL)
 
+# FPS = pyglet.clock.ClockDisplay()
+
 @SCREEN.event
 def on_draw():
     """Window draw event handler."""
     SCREEN.clear()
+    # FPS.draw()
     if GAME.over():
         GAME_OVER_IMAGE.draw()
         GAME_OVER_MESSAGE.draw()
