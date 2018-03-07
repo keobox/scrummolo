@@ -9,6 +9,6 @@ Installation:
 
 Purpose:
 - Use during a stand up meeting for
-- Havng fun
+- Having fun
 - Icebreaking
 - Keeping focus
