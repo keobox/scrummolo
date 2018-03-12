@@ -17,10 +17,18 @@ configs = [
     }
 ]
 
+@app.route('/')
+@app.route('/index')
+def index():
+    """Main page."""
+    return flask.render_template('scrummolo/index.html')
+
+
 @app.route('/scrummolo/api/v1.0/configs', methods=['GET'])
 def get_configs():
     """Returns a configs object."""
     return flask.jsonify({'configs': configs})
+
 
 @app.route('/scrummolo/api/v1.0/configs/<int:config_id>', methods=['GET'])
 def get_config(config_id):
@@ -30,6 +38,7 @@ def get_config(config_id):
         return flask.jsonify({'config': configs[config_id - 1]})
     except IndexError:
         flask.abort(404)
+
 
 @app.errorhandler(404)
 def not_found(error):
