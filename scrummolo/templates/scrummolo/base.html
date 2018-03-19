@@ -14,6 +14,9 @@
         <script type=text/javascript>
             $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
         </script>
+        <script type=text/javascript src="{{
+            url_for('static', filename='scrummolo/js/phaser.min.js') }}">
+        </script>
 
         {% block js_content %}
         {% endblock %}
