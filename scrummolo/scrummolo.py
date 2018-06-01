@@ -160,10 +160,10 @@ class Timer:
             self.tick = 0
 
 def adjust_time(duration, start_meeting_minutes, start_minutes, start_seconds):
-    if (start_minutes > start_meeting_minutes):
+    if start_minutes > start_meeting_minutes:
         adjust_minutes = start_minutes - start_meeting_minutes
         return duration - adjust_minutes, start_seconds
-    elif (start_minutes == start_meeting_minutes):
+    elif start_minutes == start_meeting_minutes:
         return duration - 1, start_seconds
     else:
         return duration, 0
