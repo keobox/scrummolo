@@ -24,13 +24,13 @@ def index():
     return flask.render_template('scrummolo/index.html')
 
 
-@app.route('/scrummolo/api/v1.0/configs', methods=['GET'])
+@app.route('/scrummolo/api/v1/configs', methods=['GET'])
 def get_configs():
     """Returns a configs object."""
     return flask.jsonify({'configs': configs})
 
 
-@app.route('/scrummolo/api/v1.0/configs/<int:config_id>', methods=['GET'])
+@app.route('/scrummolo/api/v1/configs/<int:config_id>', methods=['GET'])
 def get_config(config_id):
     """Returns a configs object given an id:int."""
     # assuming the list ordered by id.
