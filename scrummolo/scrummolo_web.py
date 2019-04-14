@@ -11,7 +11,7 @@ configs = [
         'id': 1,
         'team': settings.TEAM,
         'duration': settings.DURATION,
-        'resources': settings.RESOURCES[0],
+        'resources': settings.RESOURCES[0].split('/')[-1],
         'gameOverImage': settings.GAME_OVER_IMAGE,
         'gameOverSound' : settings.GAME_OVER_SOUND
     }
@@ -22,6 +22,11 @@ configs = [
 def index():
     """Main page."""
     return flask.render_template('scrummolo/index.html')
+
+
+@app.route('/<path:path>')
+def resources(path):
+    return flask.send_from_directory('static/scrummolo/resources', path)
 
 
 @app.route('/scrummolo/api/v1/configs', methods=['GET'])

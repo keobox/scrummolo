@@ -1,9 +1,9 @@
 
 """Talking stick configurations."""
 
-TEAM = ["Player1", "Player2", "Player3", "Player4", "Player5", "Player6"]
+TEAM = ["Lgiubert", "Fabio", "Cesare", "Alessandro"]
 DURATION = 20
-START_MEETING_MINUTE = 55
-RESOURCES = ['static/scrummolo/resources']
+START_MEETING_MINUTE = 30
+RESOURCES = ['static/scrummolo/resources/rollinz']
 GAME_OVER_IMAGE = "gameover.png"
 GAME_OVER_SOUND = "gameover.wav"
