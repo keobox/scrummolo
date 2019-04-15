@@ -16,15 +16,35 @@ function shuffle(array) {
     return array;
 }
 
+// Calculates new width and height but leave w/h ratio invariant.
+function resize(width, height, maxWidth, maxHeight) {
+    delta_width = width - maxWidth;
+    delta_height = height - maxHeight;
+    if (delta_height <= 0 && delta_width <= 0) {
+        return [width, height];
+    }
+    if (delta_height >= delta_width) {
+        return [width * maxHeight / height, maxHeight];
+    }
+    return [maxWidth, height * maxWidth / width];
+}
+
+function resizeImage(image) {
+    var dimensions = resize(image.displayWidth, image.displayHeight, app.width / 2, app.height / 2);
+    image.displayWidth = dimensions[0];
+    image.displayHeight = dimensions[1];
+}
+
 // Game Code
 
 var app = {
     width: 800,
     height: 600,
+    yMargin: 10,
     setConfig: function (config) {
         this.cfg = config;
     },
-    setTeam: function(team) {
+    setTeam: function (team) {
         this.team = team;
     }
 }
@@ -41,7 +61,8 @@ var gameLoop = {
     },
     create: function () {
         var game = this;
-        game.add.image(app.width / 2, 10, app.team[0]).setOrigin(0, 0);
+        var image = game.add.image(app.width / 2, app.yMargin, app.team[0]).setOrigin(0, 0);
+        resizeImage(image);
     },
     update: function () {
     }
