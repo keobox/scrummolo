@@ -19,36 +19,42 @@ function shuffle(array) {
 // Game Code
 
 var app = {
+    width: 800,
+    height: 600,
     setConfig: function (config) {
         this.cfg = config;
     },
+    setTeam: function(team) {
+        this.team = team;
+    }
+}
+
+var gameLoop = {
     preload: function () {
         var game = this;
         var team = shuffle(app.cfg.team);
-        app.cfg.team = team;
+        app.setTeam(team);
         team.forEach(function (player) {
             var imgPath = app.cfg.resources + '/' + player.toLowerCase() + '.png';
             game.load.image(player, imgPath);
         });
-        console.log(game);
-
     },
     create: function () {
         var game = this;
-        var team = app.cfg.team;
-        game.add.image(400, 10, team[0]).setOrigin(0,0);
+        game.add.image(app.width / 2, 10, app.team[0]).setOrigin(0, 0);
     },
     update: function () {
     }
+
 }
 
 var game_engine_config = {
     type: Phaser.AUTO,
-    width: 800,
-    height: 600,
+    width: app.width,
+    height: app.height,
     scene: {
-        preload: app.preload,
-        create: app.create,
-        update: app.update
+        preload: gameLoop.preload,
+        create: gameLoop.create,
+        update: gameLoop.update
     }
 }
