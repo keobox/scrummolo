@@ -88,7 +88,7 @@ GAME_OVER_IMAGE = create_game_over_image(settings.GAME_OVER_IMAGE)
 GAME_OVER_SOUND = pyglet.resource.media(settings.GAME_OVER_SOUND, streaming=False)
 
 #create text labels for questions
-QUESTIONS = ["On what I worked yesterday?", "On what I will work today?", "Do I have any blocker?"]
+QUESTIONS = settings.QUESTIONS
 QUESTIONS = [pyglet.text.Label(text="{0}".format(q), font_size=36, x=100, y=100) for q in QUESTIONS]
 
 PLAYER_MESSAGES = [pyglet.text.Label(text="{0}, is your turn!".format(name),

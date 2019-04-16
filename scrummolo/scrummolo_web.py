@@ -6,14 +6,16 @@ import settings
 
 app = flask.Flask(__name__)
 
+resource_path = settings.RESOURCES[0].split('/')[-1]
+
 configs = [
     {
         'id': 1,
         'team': settings.TEAM,
         'duration': settings.DURATION,
-        'resources': settings.RESOURCES[0].split('/')[-1],
-        'gameOverImage': settings.GAME_OVER_IMAGE,
-        'gameOverSound' : settings.GAME_OVER_SOUND
+        'resources': resource_path,
+        'gameOverImage': resource_path + '/' + settings.GAME_OVER_IMAGE,
+        'gameOverSound' : resource_path + '/' + settings.GAME_OVER_SOUND
     }
 ]
 
