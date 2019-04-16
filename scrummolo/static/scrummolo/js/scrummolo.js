@@ -41,11 +41,17 @@ var app = {
     width: 800,
     height: 600,
     yMargin: 10,
+    playerIndex: 0,
+    questionIndex: 0,
     setConfig: function (config) {
         this.cfg = config;
+        this.questions = config.questions;
     },
-    setTeam: function (team) {
-        this.team = team;
+    getPlayer: function () {
+        return this.team[this.playerIndex];
+    },
+    getQuestion: function () {
+        return this.questions[this.questionIndex];
     }
 }
 
@@ -53,7 +59,7 @@ var gameLoop = {
     preload: function () {
         var game = this;
         var team = shuffle(app.cfg.team);
-        app.setTeam(team);
+        app.team = team;
         team.forEach(function (player) {
             var imgPath = app.cfg.resources + '/' + player.toLowerCase() + '.png';
             game.load.image(player, imgPath);
@@ -61,8 +67,12 @@ var gameLoop = {
     },
     create: function () {
         var game = this;
-        var image = game.add.image(app.width / 2, app.yMargin, app.team[0]).setOrigin(0, 0);
-        resizeImage(image);
+        var playerImage = game.add.image(app.width / 2, app.yMargin, app.team[0]).setOrigin(0, 0);
+        resizeImage(playerImage);
+        app.playerImage = playerImage;
+        app.playerText = game.add.text(100, 100, app.getPlayer() + ', is your turn!', { font: '20px Arial', fill: '#fff' });
+        app.questionsText = game.add.text(100, 500, app.getQuestion(), { font: '40px Arial', fill: '#fff' });
+        app.stepKey = game.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     },
     update: function () {
     }
