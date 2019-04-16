@@ -15,7 +15,8 @@ configs = [
         'duration': settings.DURATION,
         'resources': resource_path,
         'gameOverImage': resource_path + '/' + settings.GAME_OVER_IMAGE,
-        'gameOverSound' : resource_path + '/' + settings.GAME_OVER_SOUND
+        'gameOverSound' : resource_path + '/' + settings.GAME_OVER_SOUND,
+        'questions' : settings.QUESTIONS
     }
 ]
 
