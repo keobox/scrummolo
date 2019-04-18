@@ -35,6 +35,10 @@ function resizeImage(image) {
     image.displayHeight = dimensions[1];
 }
 
+function getPlayerResourceName(playerName) {
+    return playerName.replace(/\./, '').replace(/\s/, '_').toLowerCase();
+}
+
 // Game Code
 
 var app = {
@@ -74,7 +78,7 @@ var gameLoop = {
         var team = shuffle(app.cfg.team);
         app.team = team;
         team.forEach(function (player) {
-            var imgPath = app.cfg.resources + '/' + player.toLowerCase() + '.png';
+            var imgPath = app.cfg.resources + '/' + getPlayerResourceName(player) + '.png';
             app.game.load.image(player, imgPath);
         });
     },
@@ -97,16 +101,11 @@ var gameLoop = {
             }
         }
     }
-
 }
 
 var game_engine_config = {
     type: Phaser.AUTO,
     width: app.width,
     height: app.height,
-    scene: {
-        preload: gameLoop.preload,
-        create: gameLoop.create,
-        update: gameLoop.update
-    }
+    scene: [gameLoop]
 }

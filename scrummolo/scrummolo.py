@@ -46,6 +46,8 @@ def resize_image(image):
 #create player objects. Player image must be in resource folder.
 PLAYER_IMAGES = []
 for player in TEAM:
+    player = player.replace('.', '')
+    player = player.replace(' ', '_')
     player_image = pyglet.resource.image(player.lower() + ".png")
     resize_image(player_image)
     PLAYER_IMAGES.append(player_image)

@@ -1,7 +1,7 @@
 
 """Talking stick configurations."""
 
-TEAM = ["Lgiubert", "Fabio", "Cesare", "Alessandro"]
+TEAM = ["Luca", "Fabio", "Cesare", "Alessandro M.", "Alessandro C.", "Gianpiero"]
 DURATION = 20
 START_MEETING_MINUTE = 30
 RESOURCES = ['static/scrummolo/resources/rollinz']
