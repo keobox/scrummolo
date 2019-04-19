@@ -95,7 +95,7 @@ QUESTIONS = [pyglet.text.Label(text="{0}".format(q), font_size=36, x=100, y=100)
 
 PLAYER_MESSAGES = [pyglet.text.Label(text="{0}, is your turn!".format(name),
                   font_size=18, x=100, y=500) for name in TEAM]
-GAME_OVER_MESSAGE = pyglet.text.Label(text="That's all Folks, Thank You!",
+GAME_OVER_MESSAGE = pyglet.text.Label(text=settings.GAME_OVER_TEXT,
                                       font_size=36, x=100, y=100)
 
 class GameLogic(object):

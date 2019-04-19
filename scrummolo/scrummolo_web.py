@@ -16,6 +16,7 @@ configs = [
         'resources': resource_path,
         'gameOverImage': resource_path + '/' + settings.GAME_OVER_IMAGE,
         'gameOverSound' : resource_path + '/' + settings.GAME_OVER_SOUND,
+        'gameOverText': settings.GAME_OVER_TEXT,
         'questions' : settings.QUESTIONS
     }
 ]

@@ -61,10 +61,11 @@ var app = {
     step: function () {
         if (this.questionIndex < this.questions.length - 1) {
             this.questionIndex++;
-        } else {
-            if (this.playerIndex === this.team.length -1) {
+            if (this.playerIndex == this.team.length - 1 && this.questionIndex === this.questions.length - 1) {
                 this.gameOver = true;
-            } else {
+            }
+        } else {
+            if (this.playerIndex < this.team.length - 1) {
                 this.questionIndex = 0;
                 this.playerIndex++;
             }
@@ -81,14 +82,18 @@ var gameLoop = {
             var imgPath = app.cfg.resources + '/' + getPlayerResourceName(player) + '.png';
             app.game.load.image(player, imgPath);
         });
+        app.game.load.image('gameOverImage', app.cfg.gameOverImage);
+        app.game.load.audio('gameOverSound', app.cfg.gameOverSound);
     },
     create: function () {
         var playerImage = app.game.add.image(app.width / 2, app.yMargin, app.team[0]).setOrigin(0, 0);
         resizeImage(playerImage);
         app.playerImage = playerImage;
-        app.playerText = app.game.add.text(100, 100, app.getPlayer() + ', is your turn!', { font: '20px Arial', fill: '#fff' });
+        app.playerText = app.game.add.text(100, 100, app.getPlayer() + ', is your turn!', { font: '21px Arial', fill: '#fff' });
         app.questionsText = app.game.add.text(100, 500, app.getQuestion(), { font: '40px Arial', fill: '#fff' });
         app.spaceKey = app.game.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        app.gameOverSound = app.game.sound.add('gameOverSound');
+        app.isFinalScreenDisplayed = false;
     },
     update: function () {
         if (Phaser.Input.Keyboard.JustDown(app.spaceKey)) {
@@ -98,6 +103,17 @@ var gameLoop = {
                 app.playerText.setText(app.getPlayer() + ', is your turn!');
                 app.playerImage.setTexture(app.getPlayer());
                 resizeImage(app.playerImage);
+            } else {
+                if (!app.isFinalScreenDisplayed) {
+                    app.isFinalScreenDisplayed = true;
+                    app.playerText.destroy();
+                    app.questionsText.destroy();
+                    app.playerImage.destroy();
+                    app.game.add.text(100, 500, app.cfg.gameOverText, { font: '40px Arial', fill: '#fff' });
+                    var gameOverImage = app.game.add.image(app.width / 2, app.yMargin, 'gameOverImage').setOrigin(0, 0);
+                    resizeImage(gameOverImage);
+                    app.gameOverSound.play();
+                }
             }
         }
     }
