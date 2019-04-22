@@ -48,9 +48,12 @@ var app = {
     playerIndex: 0,
     questionIndex: 0,
     gameOver: false,
+    isFinalScreenDisplayed: false,
+    isTimerElapsed: false,
     setConfig: function (config) {
         this.cfg = config;
         this.questions = config.questions;
+        this.timerSeconds = config.duration * 60;
     },
     getPlayer: function () {
         return this.team[this.playerIndex];
@@ -70,6 +73,25 @@ var app = {
                 this.playerIndex++;
             }
         }
+    },
+    tick: function () {
+        if (this.timerSeconds > 0) {
+            this.timerSeconds--;
+            var minute = parseInt(this.timerSeconds / 60);
+            var seconds = this.timerSeconds % 60;
+            this.timerText.setText(this.fillWithZero(minute) + ':' + this.fillWithZero(seconds));
+        } else {
+            if (!this.isTimerElapsed) {
+                this.isTimerElapsed = true;
+                this.timerText.setColor('#ff0000');
+            }
+        }
+    },
+    fillWithZero: function (n) {
+        if (n < 10) {
+            return '0' + n;
+        }
+        return n;
     }
 }
 
@@ -94,6 +116,8 @@ var gameLoop = {
         app.spaceKey = app.game.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         app.gameOverSound = app.game.sound.add('gameOverSound');
         app.isFinalScreenDisplayed = false;
+        app.timerText = app.game.add.text(100, 300, app.timerSeconds + ':00', { font: '36px Arial', fill: '#fff' });
+        app.timer = this.time.addEvent({ delay: 1000, callback: app.tick, callbackScope: app, loop: true });
     },
     update: function () {
         if (Phaser.Input.Keyboard.JustDown(app.spaceKey)) {
