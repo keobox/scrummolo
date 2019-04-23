@@ -115,8 +115,7 @@ var gameLoop = {
         app.questionsText = app.game.add.text(100, 500, app.getQuestion(), { font: '40px Arial', fill: '#fff' });
         app.spaceKey = app.game.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         app.gameOverSound = app.game.sound.add('gameOverSound');
-        app.isFinalScreenDisplayed = false;
-        app.timerText = app.game.add.text(100, 300, app.timerSeconds + ':00', { font: '36px Arial', fill: '#fff' });
+        app.timerText = app.game.add.text(100, 300, app.cfg.duration + ':00', { font: '36px Arial', fill: '#fff' });
         app.timer = this.time.addEvent({ delay: 1000, callback: app.tick, callbackScope: app, loop: true });
     },
     update: function () {
@@ -133,6 +132,7 @@ var gameLoop = {
                     app.playerText.destroy();
                     app.questionsText.destroy();
                     app.playerImage.destroy();
+                    app.timerText.destroy();
                     app.game.add.text(100, 500, app.cfg.gameOverText, { font: '40px Arial', fill: '#fff' });
                     var gameOverImage = app.game.add.image(app.width / 2, app.yMargin, 'gameOverImage').setOrigin(0, 0);
                     resizeImage(gameOverImage);
