@@ -8,15 +8,11 @@
         {% block body %}
         {% endblock %}
 
-        <script type=text/javascript src="{{
-            url_for('static', filename='scrummolo/js/jquery-3.3.1.min.js') }}">
-        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script type=text/javascript>
             $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
         </script>
-        <script type=text/javascript src="{{
-            url_for('static', filename='scrummolo/js/phaser.min.js') }}">
-        </script>
+        <script src="//cdn.jsdelivr.net/npm/phaser@3.2.0/dist/phaser.min.js"></script>
 
         {% block js_content %}
         {% endblock %}

@@ -62,3 +62,7 @@ resources/
 *.bak
 .vscode/
 
+# JS local libs
+jquery-3.3.1.*
+phaser.*
+
