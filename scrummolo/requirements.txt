@@ -1,8 +1,15 @@
+appdirs==1.4.3
+attrs==19.3.0
+black==19.10b0
 Click==7.0
 Flask==1.1.1
 future==0.18.2
 itsdangerous==1.1.0
 Jinja2==2.11.1
 MarkupSafe==1.1.1
+pathspec==0.7.0
 pyglet==1.4.10
+regex==2020.1.8
+toml==0.10.0
+typed-ast==1.4.1
 Werkzeug==0.16.1
