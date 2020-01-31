@@ -177,25 +177,10 @@ class Timer:
             self.label.text = "{:02d}:{:02d}".format(self.mins, self.secs)
             self.tick = 0
 
-
-def adjust_time(duration, start_meeting_minutes, start_minutes, start_seconds):
-    if start_minutes > start_meeting_minutes:
-        adjust_minutes = start_minutes - start_meeting_minutes
-        return duration - adjust_minutes, start_seconds
-    elif start_minutes == start_meeting_minutes:
-        return duration - 1, start_seconds
-    else:
-        return duration, 0
-
-
-NOW = datetime.now()
-MINUTES, SECONDS = adjust_time(
-    settings.DURATION, settings.START_MEETING_MINUTE, NOW.minute, NOW.second
-)
 TIME_LABEL = pyglet.text.Label(
-    text="{:02d}:{:02d}".format(MINUTES, SECONDS), font_size=36, x=100, y=300
+    text="{:02d}:00".format(settings.DURATION), font_size=36, x=100, y=300
 )
-TIMER = Timer(MINUTES, SECONDS, TIME_LABEL)
+TIMER = Timer(settings.DURATION, 0, TIME_LABEL)
 
 # FPS = pyglet.clock.ClockDisplay()
 
