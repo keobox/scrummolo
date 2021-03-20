@@ -5,7 +5,7 @@ Click==7.0
 Flask==1.1.1
 future==0.18.2
 itsdangerous==1.1.0
-Jinja2==2.11.1
+Jinja2==2.11.3
 MarkupSafe==1.1.1
 pathspec==0.7.0
 pyglet==1.4.10
