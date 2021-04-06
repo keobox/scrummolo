@@ -18,8 +18,8 @@ function shuffle(array) {
 
 // Calculates new width and height but leave w/h ratio invariant.
 function resize(width, height, maxWidth, maxHeight) {
-    delta_width = width - maxWidth;
-    delta_height = height - maxHeight;
+    var delta_width = width - maxWidth;
+    var delta_height = height - maxHeight;
     if (delta_height <= 0 && delta_width <= 0) {
         return [width, height];
     }
