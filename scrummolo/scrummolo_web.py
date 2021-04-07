@@ -36,7 +36,7 @@ def resources(path):
 @app.route("/scrummolo/api/v1/configs", methods=["GET"])
 def get_configs():
     """Returns a configs object."""
-    return flask.jsonify({"configs": configs})
+    return {"configs": configs}
 
 
 @app.route("/scrummolo/api/v1/configs/<int:config_id>", methods=["GET"])
@@ -44,7 +44,7 @@ def get_config(config_id):
     """Returns a configs object given an id:int."""
     # assuming the list ordered by id.
     try:
-        return flask.jsonify({"config": configs[config_id - 1]})
+        return {"config": configs[config_id - 1]}
     except IndexError:
         flask.abort(404)
 
