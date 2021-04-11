@@ -7,7 +7,7 @@ app = flask.Flask(__name__)
 
 resource_path = settings.RESOURCES[0].split("/")[-1]
 
-configs = [
+teams = [
     {
         "id": 1,
         "team": settings.TEAM,
@@ -33,18 +33,18 @@ def resources(path):
     return flask.send_from_directory("static/scrummolo/resources", path)
 
 
-@app.route("/scrummolo/api/v1/configs", methods=["GET"])
-def get_configs():
+@app.route("/teams", methods=["GET"])
+def get_teams():
     """Returns a configs object."""
-    return {"configs": configs}
+    return {"teams": teams}
 
 
-@app.route("/scrummolo/api/v1/configs/<int:config_id>", methods=["GET"])
-def get_config(config_id):
+@app.route("/team/<int:team_id>", methods=["GET"])
+def get_team(team_id):
     """Returns a configs object given an id:int."""
-    # assuming the list ordered by id.
+    # assuming the list is ordered by id.
     try:
-        return {"config": configs[config_id - 1]}
+        return {"team": teams[team_id - 1]}
     except IndexError:
         flask.abort(404)
 
