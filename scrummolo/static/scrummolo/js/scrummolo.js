@@ -96,7 +96,6 @@ var app = {
 }
 
 // Game Loop Scene
-
 var gameLoop = new Phaser.scene('gameLoop');
 
 gameLoop.preload = function () {
@@ -145,11 +144,4 @@ gameLoop.update = function () {
             }
         }
     }
-}
-
-var game_engine_config = {
-    type: Phaser.AUTO,
-    width: app.width,
-    height: app.height,
-    scene: [gameLoop]
 }
