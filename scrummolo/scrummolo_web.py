@@ -25,7 +25,7 @@ teams = [
 @app.route("/index")
 def index():
     """Main page."""
-    return flask.render_template("scrummolo/index.html")
+    return flask.send_from_directory("static/scrummolo", "index.html")
 
 
 @app.route("/<path:path>")
