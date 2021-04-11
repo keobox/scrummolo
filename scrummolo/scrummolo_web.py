@@ -30,18 +30,19 @@ def index():
 
 @app.route("/<path:path>")
 def resources(path):
+    """Images and sounds."""
     return flask.send_from_directory("static/scrummolo/resources", path)
 
 
 @app.route("/teams", methods=["GET"])
 def get_teams():
-    """Returns a configs object."""
+    """Returns a team resources."""
     return {"teams": teams}
 
 
 @app.route("/team/<int:team_id>", methods=["GET"])
 def get_team(team_id):
-    """Returns a configs object given an id:int."""
+    """Returns a team resource given an id:int."""
     # assuming the list is ordered by id.
     try:
         return {"team": teams[team_id - 1]}
