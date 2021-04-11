@@ -39,7 +39,7 @@ function getPlayerResourceName(playerName) {
     return playerName.replace(/\./, '').replace(/\s/, '_').toLowerCase();
 }
 
-// Game Code
+// Game Logic
 
 var app = {
     width: 800,
@@ -95,49 +95,53 @@ var app = {
     }
 }
 
-var gameLoop = {
-    preload: function () {
-        app.game = this;
-        var team = shuffle(app.cfg.team);
-        app.team = team;
-        team.forEach(function (player) {
-            var imgPath = app.cfg.resources + '/' + getPlayerResourceName(player) + '.png';
-            app.game.load.image(player, imgPath);
-        });
-        app.game.load.image('gameOverImage', app.cfg.gameOverImage);
-        app.game.load.audio('gameOverSound', app.cfg.gameOverSound);
-    },
-    create: function () {
-        var playerImage = app.game.add.image(app.width / 2, app.yMargin, app.team[0]).setOrigin(0, 0);
-        resizeImage(playerImage);
-        app.playerImage = playerImage;
-        app.playerText = app.game.add.text(100, 100, app.getPlayer() + ', is your turn!', { font: '21px Arial', fill: '#fff' });
-        app.questionsText = app.game.add.text(100, 500, app.getQuestion(), { font: '40px Arial', fill: '#fff' });
-        app.spaceKey = app.game.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-        app.gameOverSound = app.game.sound.add('gameOverSound');
-        app.timerText = app.game.add.text(100, 300, app.cfg.duration + ':00', { font: '36px Arial', fill: '#fff' });
-        app.timer = this.time.addEvent({ delay: 1000, callback: app.tick, callbackScope: app, loop: true });
-    },
-    update: function () {
-        if (Phaser.Input.Keyboard.JustDown(app.spaceKey)) {
-            if (!app.gameOver) {
-                app.step();
-                app.questionsText.setText(app.getQuestion());
-                app.playerText.setText(app.getPlayer() + ', is your turn!');
-                app.playerImage.setTexture(app.getPlayer());
-                resizeImage(app.playerImage);
-            } else {
-                if (!app.isFinalScreenDisplayed) {
-                    app.isFinalScreenDisplayed = true;
-                    app.playerText.destroy();
-                    app.questionsText.destroy();
-                    app.playerImage.destroy();
-                    app.timerText.destroy();
-                    app.game.add.text(100, 500, app.cfg.gameOverText, { font: '40px Arial', fill: '#fff' });
-                    var gameOverImage = app.game.add.image(app.width / 2, app.yMargin, 'gameOverImage').setOrigin(0, 0);
-                    resizeImage(gameOverImage);
-                    app.gameOverSound.play();
-                }
+// Game Loop Scene
+
+var gameLoop = new Phaser.scene('gameLoop');
+
+gameLoop.preload = function () {
+    app.game = this;
+    var team = shuffle(app.cfg.team);
+    app.team = team;
+    team.forEach(function (player) {
+        var imgPath = app.cfg.resources + '/' + getPlayerResourceName(player) + '.png';
+        app.game.load.image(player, imgPath);
+    });
+    app.game.load.image('gameOverImage', app.cfg.gameOverImage);
+    app.game.load.audio('gameOverSound', app.cfg.gameOverSound);
+}
+
+gameLoop.create = function () {
+    var playerImage = app.game.add.image(app.width / 2, app.yMargin, app.team[0]).setOrigin(0, 0);
+    resizeImage(playerImage);
+    app.playerImage = playerImage;
+    app.playerText = app.game.add.text(100, 100, app.getPlayer() + ', is your turn!', { font: '21px Arial', fill: '#fff' });
+    app.questionsText = app.game.add.text(100, 500, app.getQuestion(), { font: '40px Arial', fill: '#fff' });
+    app.spaceKey = app.game.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+    app.gameOverSound = app.game.sound.add('gameOverSound');
+    app.timerText = app.game.add.text(100, 300, app.cfg.duration + ':00', { font: '36px Arial', fill: '#fff' });
+    app.timer = this.time.addEvent({ delay: 1000, callback: app.tick, callbackScope: app, loop: true });
+}
+
+gameLoop.update = function () {
+    if (Phaser.Input.Keyboard.JustDown(app.spaceKey)) {
+        if (!app.gameOver) {
+            app.step();
+            app.questionsText.setText(app.getQuestion());
+            app.playerText.setText(app.getPlayer() + ', is your turn!');
+            app.playerImage.setTexture(app.getPlayer());
+            resizeImage(app.playerImage);
+        } else {
+            if (!app.isFinalScreenDisplayed) {
+                app.isFinalScreenDisplayed = true;
+                app.playerText.destroy();
+                app.questionsText.destroy();
+                app.playerImage.destroy();
+                app.timerText.destroy();
+                app.game.add.text(100, 500, app.cfg.gameOverText, { font: '40px Arial', fill: '#fff' });
+                var gameOverImage = app.game.add.image(app.width / 2, app.yMargin, 'gameOverImage').setOrigin(0, 0);
+                resizeImage(gameOverImage);
+                app.gameOverSound.play();
             }
         }
     }
