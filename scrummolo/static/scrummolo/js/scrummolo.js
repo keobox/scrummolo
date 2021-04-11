@@ -96,7 +96,7 @@ var app = {
 }
 
 // Game Loop Scene
-var gameLoop = new Phaser.scene('gameLoop');
+var gameLoop = new Phaser.Scene('gameLoop');
 
 gameLoop.preload = function () {
     app.game = this;
