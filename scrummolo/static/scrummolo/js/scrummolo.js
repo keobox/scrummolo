@@ -35,7 +35,7 @@ function resizeImage(image) {
     image.displayHeight = dimensions[1];
 }
 
-function getPlayerResourceName(playerName) {
+function getPlayerAssetName(playerName) {
     return playerName.replace(/\./, '').replace(/\s/, '_').toLowerCase();
 }
 
@@ -103,7 +103,7 @@ gameLoop.preload = function () {
     var team = shuffle(app.cfg.team);
     app.team = team;
     team.forEach(function (player) {
-        var imgPath = app.cfg.resources + '/' + getPlayerResourceName(player) + '.png';
+        var imgPath = app.cfg.assets + '/' + getPlayerAssetName(player) + '.png';
         app.game.load.image(player, imgPath);
     });
     app.game.load.image('gameOverImage', app.cfg.gameOverImage);

@@ -5,16 +5,16 @@ import settings
 
 app = flask.Flask(__name__)
 
-resource_path = settings.RESOURCES[0].split("/")[-1]
+assets_path = settings.RESOURCES[0].split("/")[-1]
 
 teams = [
     {
         "id": 1,
         "team": settings.TEAM,
         "duration": settings.DURATION,
-        "resources": resource_path,
-        "gameOverImage": resource_path + "/" + settings.GAME_OVER_IMAGE,
-        "gameOverSound": resource_path + "/" + settings.GAME_OVER_SOUND,
+        "assets": assets_path,
+        "gameOverImage": assets_path + "/" + settings.GAME_OVER_IMAGE,
+        "gameOverSound": assets_path + "/" + settings.GAME_OVER_SOUND,
         "gameOverText": settings.GAME_OVER_TEXT,
         "questions": settings.QUESTIONS,
     }
@@ -29,9 +29,9 @@ def index():
 
 
 @app.route("/<path:path>")
-def resources(path):
+def assets(path):
     """Images and sounds."""
-    return flask.send_from_directory("static/scrummolo/resources", path)
+    return flask.send_from_directory("static/scrummolo/assets", path)
 
 
 @app.route("/teams", methods=["GET"])

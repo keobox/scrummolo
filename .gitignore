@@ -58,7 +58,7 @@ target/
 
 # Misc
 .DS_Store
-resources/
+assets/
 *.bak
 .vscode/
 
