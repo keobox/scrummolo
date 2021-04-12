@@ -1,22 +1,25 @@
 """API for scrummolo web."""
 
 import flask
-import settings
 
 app = flask.Flask(__name__)
 
-assets_path = settings.RESOURCES[0].split("/")[-1]
+assets_path = "bh6"
 
 teams = [
     {
         "id": 1,
-        "team": settings.TEAM,
-        "duration": settings.DURATION,
+        "team": ["Paolo", "Christian", "Marco"],
+        "duration": 30,
         "assets": assets_path,
-        "gameOverImage": assets_path + "/" + settings.GAME_OVER_IMAGE,
-        "gameOverSound": assets_path + "/" + settings.GAME_OVER_SOUND,
-        "gameOverText": settings.GAME_OVER_TEXT,
-        "questions": settings.QUESTIONS,
+        "gameOverImage": assets_path + "/" + "gameover.png",
+        "gameOverSound": assets_path + "/" + "gameover.wav",
+        "gameOverText": "That's all Folks, Thank You!",
+        "questions": [
+            "On what I worked yesterday?",
+            "On what I will work today?",
+            "Do I have any blocker?",
+        ],
     }
 ]
 
