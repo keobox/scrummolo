@@ -4,7 +4,7 @@ import flask
 
 app = flask.Flask(__name__)
 
-assets_path = "bh6"
+assets_path = "cards"
 
 teams = [
     {
@@ -12,6 +12,7 @@ teams = [
         "team": ["Paolo", "Christian", "Marco"],
         "duration": 30,
         "assets": assets_path,
+        "atlas": "cards",
         "gameOverImage": assets_path + "/" + "gameover.png",
         "gameOverSound": assets_path + "/" + "gameover.wav",
         "gameOverText": "That's all Folks, Thank You!",

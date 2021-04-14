@@ -13,6 +13,7 @@ $(function() {
     // Get config data from REST API
     $.getJSON('/team/1', function(data) {
         app.setConfig(data.team);
+        $('#loading').fadeOut('slow');
         new Phaser.Game(game_engine_config);
     });
 });
