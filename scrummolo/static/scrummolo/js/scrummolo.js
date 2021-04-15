@@ -36,7 +36,6 @@ function resizeImage(image) {
 }
 
 // Game Logic
-
 var app = {
     width: 800,
     height: 600,
@@ -109,7 +108,7 @@ gameLoop.create = function () {
     app.frames = frames
     var playerImage = app.game.add.image(app.width / 2,
                                          app.yMargin,
-                                         app.cfg.assets,
+                                         app.cfg.atlas,
                                          Phaser.Math.RND.pick(frames)).setOrigin(0, 0);
     resizeImage(playerImage);
     app.playerImage = playerImage;

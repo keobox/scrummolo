@@ -59,6 +59,7 @@ target/
 # Misc
 .DS_Store
 assets/
+config.json
 *.bak
 .vscode/
 
