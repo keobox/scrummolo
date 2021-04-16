@@ -12,7 +12,7 @@ with open("scrummolo/static/scrummolo/js/config.json") as cfg:
 @app.route("/teams", methods=["GET"])
 def get_teams():
     """Returns a team resources."""
-    return {"teams": teams}
+    return {"teams": teams['teams']}
 
 
 @app.route("/team/<int:team_id>", methods=["GET"])
