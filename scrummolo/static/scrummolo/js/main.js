@@ -11,7 +11,7 @@ var game_engine_config = {
 // Game starts here, starting jQuery
 $(function() {
     // Get config data from REST API
-    $.getJSON('/static/scrummolo/js/config.json', function(data) {
+    $.getJSON('/js/config.json', function(data) {
         var team = data.teams[0];
         app.setConfig(team);
         $('#loading').fadeOut('slow');

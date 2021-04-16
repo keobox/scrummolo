@@ -39,6 +39,7 @@ function resizeImage(image) {
 var app = {
     width: 800,
     height: 600,
+    xMargin: 10,
     yMargin: 10,
     playerIndex: 0,
     questionIndex: 0,
@@ -99,14 +100,14 @@ gameLoop.preload = function () {
                         app.cfg.assets + '/' + app.cfg.atlas + '.png',
                         app.cfg.assets + '/' + app.cfg.atlas + '.json');
     app.team = shuffle(app.cfg.team);
-    app.game.load.image('gameOverImage', app.cfg.gameOverImage);
-    app.game.load.audio('gameOverSound', app.cfg.gameOverSound);
+    app.game.load.image('gameOverImage', app.cfg.assets + '/' + app.cfg.gameOverImage);
+    app.game.load.audio('gameOverSound', app.cfg.assets + '/' + app.cfg.gameOverSound);
 }
 
 gameLoop.create = function () {
     var frames = app.game.textures.get(app.cfg.atlas).getFrameNames();
     app.frames = frames
-    var playerImage = app.game.add.image(app.width / 2,
+    var playerImage = app.game.add.image(app.width / 2 + app.xMargin,
                                          app.yMargin,
                                          app.cfg.atlas,
                                          Phaser.Math.RND.pick(frames)).setOrigin(0, 0);
