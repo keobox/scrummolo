@@ -49,14 +49,15 @@ var app = {
     setConfig: function (config) {
         this.cfg = config;
     },
-    setTeam: function(teamModel) {
-        this.teamModel = teamModel;
-        this.duration = teamModel.duration;
-        this.questions = teamModel.questions;
-        this.timerSeconds = teamModel.duration * 60;
+    setTeam: function(team) {
+        this.team = team;
+        this.duration = team.duration;
+        this.questions = team.questions;
+        this.timerSeconds = team.duration * 60;
+        this.players = shuffle(team.team);
     },
     getPlayer: function () {
-        return this.team[this.playerIndex];
+        return this.players[this.playerIndex];
     },
     getQuestion: function () {
         return this.questions[this.questionIndex];
@@ -64,11 +65,11 @@ var app = {
     step: function () {
         if (this.questionIndex < this.questions.length - 1) {
             this.questionIndex++;
-            if (this.playerIndex == this.team.length - 1 && this.questionIndex === this.questions.length - 1) {
+            if (this.playerIndex == this.players.length - 1 && this.questionIndex === this.questions.length - 1) {
                 this.gameOver = true;
             }
         } else {
-            if (this.playerIndex < this.team.length - 1) {
+            if (this.playerIndex < this.players.length - 1) {
                 this.questionIndex = 0;
                 this.playerIndex++;
             }
@@ -100,20 +101,19 @@ var gameLoop = new Phaser.Scene('gameLoop');
 
 gameLoop.preload = function () {
     app.game = this;
-    app.game.load.atlas(app.teamModel.skin,
-                        app.cfg.assets + '/' + app.teamModel.skin + '/' + app.teamModel.skin + '.png',
-                        app.cfg.assets + '/' + app.teamModel.skin + '/' + app.teamModel.skin + '.json');
-    app.team = shuffle(app.teamModel.team);
+    app.game.load.atlas(app.team.skin,
+                        app.cfg.assets + '/' + app.team.skin + '/' + app.team.skin + '.png',
+                        app.cfg.assets + '/' + app.team.skin + '/' + app.team.skin + '.json');
     app.game.load.image('gameOverImage', app.cfg.assets + '/' + app.cfg.gameOverImage);
     app.game.load.audio('gameOverSound', app.cfg.assets + '/' + app.cfg.gameOverSound);
 }
 
 gameLoop.create = function () {
-    var frames = app.game.textures.get(app.teamModel.skin).getFrameNames();
+    var frames = app.game.textures.get(app.team.skin).getFrameNames();
     app.frames = frames
     var playerImage = app.game.add.image(app.width / 2 + app.xMargin,
                                          app.yMargin,
-                                         app.teamModel.skin,
+                                         app.team.skin,
                                          Phaser.Math.RND.pick(frames)).setOrigin(0, 0);
     resizeImage(playerImage);
     app.playerImage = playerImage;
@@ -132,7 +132,7 @@ gameLoop.update = function () {
             app.questionsText.setText(app.getQuestion());
             if (app.questionIndex == 0) {
                 app.playerText.setText(app.getPlayer() + ', is your turn!');
-                app.playerImage.setTexture(app.teamModel.skin, Phaser.Math.RND.pick(app.frames));
+                app.playerImage.setTexture(app.team.skin, Phaser.Math.RND.pick(app.frames));
                 app.playerImage.setOrigin(0, 0);
                 resizeImage(app.playerImage);
             }
