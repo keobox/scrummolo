@@ -48,8 +48,12 @@ var app = {
     isTimerElapsed: false,
     setConfig: function (config) {
         this.cfg = config;
-        this.questions = config.questions;
-        this.timerSeconds = config.duration * 60;
+    },
+    setTeam: function(teamModel) {
+        this.teamModel = teamModel;
+        this.duration = teamModel.duration;
+        this.questions = teamModel.questions;
+        this.timerSeconds = teamModel.duration * 60;
     },
     getPlayer: function () {
         return this.team[this.playerIndex];
@@ -96,20 +100,20 @@ var gameLoop = new Phaser.Scene('gameLoop');
 
 gameLoop.preload = function () {
     app.game = this;
-    app.game.load.atlas(app.cfg.atlas,
-                        app.cfg.assets + '/' + app.cfg.atlas + '.png',
-                        app.cfg.assets + '/' + app.cfg.atlas + '.json');
-    app.team = shuffle(app.cfg.team);
+    app.game.load.atlas(app.teamModel.skin,
+                        app.cfg.assets + '/' + app.teamModel.skin + '/' + app.teamModel.skin + '.png',
+                        app.cfg.assets + '/' + app.teamModel.skin + '/' + app.teamModel.skin + '.json');
+    app.team = shuffle(app.teamModel.team);
     app.game.load.image('gameOverImage', app.cfg.assets + '/' + app.cfg.gameOverImage);
     app.game.load.audio('gameOverSound', app.cfg.assets + '/' + app.cfg.gameOverSound);
 }
 
 gameLoop.create = function () {
-    var frames = app.game.textures.get(app.cfg.atlas).getFrameNames();
+    var frames = app.game.textures.get(app.teamModel.skin).getFrameNames();
     app.frames = frames
     var playerImage = app.game.add.image(app.width / 2 + app.xMargin,
                                          app.yMargin,
-                                         app.cfg.atlas,
+                                         app.teamModel.skin,
                                          Phaser.Math.RND.pick(frames)).setOrigin(0, 0);
     resizeImage(playerImage);
     app.playerImage = playerImage;
@@ -117,7 +121,7 @@ gameLoop.create = function () {
     app.questionsText = app.game.add.text(100, 500, app.getQuestion(), { font: '40px Arial', fill: '#fff' });
     app.spaceKey = app.game.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     app.gameOverSound = app.game.sound.add('gameOverSound');
-    app.timerText = app.game.add.text(100, 300, app.cfg.duration + ':00', { font: '36px Arial', fill: '#fff' });
+    app.timerText = app.game.add.text(100, 300, app.duration + ':00', { font: '36px Arial', fill: '#fff' });
     app.timer = this.time.addEvent({ delay: 1000, callback: app.tick, callbackScope: app, loop: true });
 }
 
@@ -128,7 +132,7 @@ gameLoop.update = function () {
             app.questionsText.setText(app.getQuestion());
             if (app.questionIndex == 0) {
                 app.playerText.setText(app.getPlayer() + ', is your turn!');
-                app.playerImage.setTexture(app.cfg.atlas, Phaser.Math.RND.pick(app.frames));
+                app.playerImage.setTexture(app.teamModel.skin, Phaser.Math.RND.pick(app.frames));
                 app.playerImage.setOrigin(0, 0);
                 resizeImage(app.playerImage);
             }
