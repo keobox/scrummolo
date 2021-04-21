@@ -9,10 +9,10 @@ with open("scrummolo/static/scrummolo/js/config.json") as cfg:
     teams = json.load(cfg)
 
 
-@app.route("/teams", methods=["GET"])
-def get_teams():
+@app.route("/teams/<string:user>", methods=["GET"])
+def get_teams(user):
     """Returns a team resources."""
-    return {"teams": teams['teams']}
+    return {"teams": [team for team in teams['teams'] if team['user'] == user]}
 
 
 @app.route("/team/<int:team_id>", methods=["GET"])
