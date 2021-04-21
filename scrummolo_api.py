@@ -5,7 +5,7 @@ import json
 
 app = flask.Flask(__name__)
 
-with open("scrummolo/static/scrummolo/js/config.json") as cfg:
+with open("static/scrummolo/js/config.json") as cfg:
     teams = json.load(cfg)
 
 
