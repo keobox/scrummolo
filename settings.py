@@ -1,8 +1,7 @@
 """Talking stick configurations."""
 
 TEAM = ["Cesare", "Massimo", "Riccardo", "Andrea"]
-DURATION = 30
-START_MEETING_MINUTE = 30
+DURATION = 15
 RESOURCES = ["static/scrummolo/assets/bh6"]
 GAME_OVER_IMAGE = "gameover.png"
 GAME_OVER_SOUND = "gameover.wav"
