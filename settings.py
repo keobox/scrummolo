@@ -1,6 +1,6 @@
 """Talking stick configurations."""
 
-TEAM = ["Paolo", "Christian", "Marco"]
+TEAM = ["Cesare", "Massimo", "Riccardo", "Andrea"]
 DURATION = 30
 START_MEETING_MINUTE = 30
 RESOURCES = ["static/scrummolo/assets/bh6"]
