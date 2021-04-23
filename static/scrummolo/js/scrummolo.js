@@ -55,7 +55,7 @@ var app = {
         this.questions = team.questions;
         this.timerSeconds = team.duration * 60;
         if (team.team.length > 0) {
-            this.players = shuffle(team.team);
+            this.players = shuffle(team.players);
         } else {
             var groups = team.groups;
             groups.map(function(group) {shuffle(group)});
