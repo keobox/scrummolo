@@ -2,7 +2,7 @@ import dataclasses
 
 @dataclasses.dataclass
 class Team:
-    id: 'typing.Any'
+    team_id: 'typing.Any'
     duration: int
     name: str
     skin: str

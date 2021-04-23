@@ -10,7 +10,7 @@ def test_team_model_init():
     ]
     players_list = ['Ace', 'Jack', 'Queen', 'King', 'Ten']
     team = Team(
-        id=id_,
+        team_id=id_,
         duration=20,
         name='alice',
         questions=questions_list,
@@ -18,7 +18,7 @@ def test_team_model_init():
         players=players_list,
         user='carrol'
     )
-    assert team.id == id_
+    assert team.team_id == id_
     assert team.duration == 20
     assert team.name == 'alice'
     assert team.questions == questions_list
