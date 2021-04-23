@@ -12,16 +12,16 @@ def test_team_model_init():
     team = Team(
         id=id_,
         duration=20,
-        name='team 1',
+        name='alice',
         questions=questions_list,
         skin="cards",
         players=players_list,
-        user='the_user_id'
+        user='carrol'
     )
     assert team.id == id_
     assert team.duration == 20
-    assert team.name == 'team 1'
+    assert team.name == 'alice'
     assert team.questions == questions_list
     assert team.skin == 'cards'
     assert team.players == players_list
-    assert team.user == 'the_user_id'
+    assert team.user == 'carrol'
