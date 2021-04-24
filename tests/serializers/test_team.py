@@ -16,7 +16,7 @@ def test_serialize_domain_team():
         skin="arda",
         user="J. R. R. Tolkien",
         questions=questions_list,
-        players=players_list
+        players=players_list,
     )
     expected_json_d = team.to_dict()
     expected_json_d["team_id"] = str(expected_json_d["team_id"])
