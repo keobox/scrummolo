@@ -15,7 +15,6 @@ def test_team_model_init():
         team_id=id_,
         duration=20,
         name="alice",
-        questions=questions_list,
         skin="cards",
         players=players_list,
         user="carrol",
