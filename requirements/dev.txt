@@ -1,4 +1,0 @@
--r prod.txt
-
-black
-pytest
