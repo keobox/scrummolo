@@ -3,8 +3,8 @@ import uuid
 from unittest import mock
 
 from scrummolo.domain.team import Team
-from scrummolo.use_cases.find_by_user_use_case import find_by_user
-from scrummolo.use_cases.find_by_id_use_case import find_by_id
+from scrummolo.use_cases.find_teams_by_user_use_case import find_teams_by_user
+from scrummolo.use_cases.find_team_by_id_use_case import find_team_by_id
 
 
 @pytest.fixture
@@ -25,7 +25,7 @@ def domain_teams():
         skin="computers",
         user="jobs",
         questions=[
-            "Did you nuy the mother board?",
+            "Did you buy the mother board?",
             "Did you said is all about design?",
         ],
         players=["Steve Jobs", "Steve Wozniak"],
@@ -48,8 +48,8 @@ def domain_teams():
 def test_find_by_user(domain_teams):
     repo = mock.Mock()
     expected_result = [t for t in domain_teams if t.user == "jobs"]
-    repo.find_by_user.return_value = expected_result
-    result = find_by_user(repo, "jobs")
+    repo.find_teams_by_user.return_value = expected_result
+    result = find_teams_by_user(repo, "jobs")
     assert result == expected_result
 
 
@@ -57,6 +57,6 @@ def test_find_by_id(domain_teams):
     repo = mock.Mock()
     expected_result = domain_teams[0]
     team_id = expected_result.team_id
-    repo.find_by_id.return_value = expected_result
-    result = find_by_id(repo, team_id)
+    repo.find_team_by_id.return_value = expected_result
+    result = find_team_by_id(repo, team_id)
     assert result == expected_result
