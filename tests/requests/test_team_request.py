@@ -12,7 +12,7 @@ def test_team_request_accepted():
     data = {
         "team_id": uuid.uuid4(),
         "duration": 25,
-        "name": "jeep",
+        "name": "jeeg",
         "skin": "mecha",
         "user": "nagai",
         "questions": ["Can you launch the components?", "Can you squash that Haniwa monster?"],
