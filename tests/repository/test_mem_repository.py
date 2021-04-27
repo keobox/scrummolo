@@ -38,6 +38,7 @@ def test_find_team_by_user():
     entities = repo.find_teams_by_user("k")
     assert isinstance(entities[0], Team)
     assert len(entities) == 2
+    assert len(repo.list()) == 3
 
 
 def test_add_team():
