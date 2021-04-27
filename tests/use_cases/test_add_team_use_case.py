@@ -12,7 +12,7 @@ def test_add_team_use_case():
         "name": "daitarn",
         "skin": "mecha",
         "user": "nakajima",
-        "questions": ["How many meganoids can we destroy", "Should we go on mars?"],
+        "questions": ["How many meganoids can we destroy?", "Should we go on mars?"],
         "players": ["Banjo", "Beauty", "Reika", "Toppy"]
     }
     repo = mock.Mock()
