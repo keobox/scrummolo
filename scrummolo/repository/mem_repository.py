@@ -2,7 +2,6 @@ from scrummolo.domain.team import Team
 
 
 class MemRepository:
-
     def __init__(self, data):
         if data:
             self.data = data

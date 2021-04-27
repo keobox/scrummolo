@@ -13,7 +13,7 @@ def test_find_team_by_user():
             "skin": "skin",
             "user": "k",
             "questions": ["Q?", "P?"],
-            "players": ["Ace", "Dice"]
+            "players": ["Ace", "Dice"],
         },
         {
             "team_id": uuid.uuid4(),
@@ -22,7 +22,7 @@ def test_find_team_by_user():
             "skin": "skin",
             "user": "k",
             "questions": ["Z?", "Y?"],
-            "players": ["A", "B"]
+            "players": ["A", "B"],
         },
         {
             "team_id": uuid.uuid4(),
@@ -31,7 +31,7 @@ def test_find_team_by_user():
             "skin": "skin",
             "user": "j",
             "questions": ["Z?", "Y?"],
-            "players": ["A", "B"]
+            "players": ["A", "B"],
         },
     ]
     repo = MemRepository(data)
@@ -42,13 +42,15 @@ def test_find_team_by_user():
 
 def test_add_team():
     repo = MemRepository([])
-    repo.add_team({
+    repo.add_team(
+        {
             "team_id": uuid.uuid4(),
             "duration": 20,
             "name": "z",
             "skin": "skin",
             "user": "j",
             "questions": ["Z?", "Y?"],
-            "players": ["A", "B"]
-        })
+            "players": ["A", "B"],
+        }
+    )
     assert len(repo.list()) == 1

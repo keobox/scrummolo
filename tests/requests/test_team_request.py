@@ -15,8 +15,11 @@ def test_team_request_accepted():
         "name": "jeeg",
         "skin": "mecha",
         "user": "nagai",
-        "questions": ["Can you launch the components?", "Can you squash that Haniwa monster?"],
-        "players": ["Hiroshi", "Miwa"]
+        "questions": [
+            "Can you launch the components?",
+            "Can you squash that Haniwa monster?",
+        ],
+        "players": ["Hiroshi", "Miwa"],
     }
     team_request = TeamRequest(**data)
     valid_data = dataclasses.asdict(team_request)
@@ -31,7 +34,7 @@ def test_team_request_missing_field():
         "name": "Mazinger Z",
         "user": "nagai",
         "questions": ["Where doc Hell is?"],
-        "players": ["Koji", "Sayaka"]
+        "players": ["Koji", "Sayaka"],
     }
     with pytest.raises(TypeError) as ex:
         TeamRequest(**data)
@@ -46,7 +49,7 @@ def test_team_request_invalid_data():
         "skin": "mecha",
         "user": "nagai",
         "questions": ["Where doc Hell is?"],
-        "players": ["Koji", "Sayaka"]
+        "players": ["Koji", "Sayaka"],
     }
     with pytest.raises(pydantic.ValidationError) as ex:
         TeamRequest(**data)
@@ -61,7 +64,7 @@ def test_team_request_coercion():
         "skin": "mecha",
         "user": "nagai",
         "questions": ["Where doc Hell is?"],
-        "players": ["Koji", "Sayaka"]
+        "players": ["Koji", "Sayaka"],
     }
     team_request = TeamRequest(**data)
     assert team_request.duration == 30

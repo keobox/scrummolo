@@ -13,7 +13,7 @@ def test_add_team_use_case():
         "skin": "mecha",
         "user": "nakajima",
         "questions": ["How many meganoids can we destroy?", "Should we go on mars?"],
-        "players": ["Banjo", "Beauty", "Reika", "Toppy"]
+        "players": ["Banjo", "Beauty", "Reika", "Toppy"],
     }
     repo = mock.Mock()
     repo.add_team.return_value = Team.from_dict(team_dict)

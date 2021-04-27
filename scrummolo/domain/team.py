@@ -17,7 +17,9 @@ class Team:
     name: str
     skin: str
     user: str
-    questions: typing.List[str] = dataclasses.field(default_factory=default_questions_list)
+    questions: typing.List[str] = dataclasses.field(
+        default_factory=default_questions_list
+    )
     players: typing.List[str] = dataclasses.field(default_factory=list)
 
     @classmethod
