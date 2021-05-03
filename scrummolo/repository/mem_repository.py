@@ -15,10 +15,8 @@ class MemRepository:
         teams = [Team(**t) for t in self.data if t["team_id"] == team_id]
         return teams[0]
 
-    def add_team(self, data_doc):
-        t = Team(**data_doc)
-        self.data.append(t)
-        return t
+    def add_team(self, team_doc):
+        self.data.append(team_doc)
 
     def list(self):
         return list(self.data)
