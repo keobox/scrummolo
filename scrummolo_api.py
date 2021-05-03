@@ -41,7 +41,7 @@ def create_team():
         parsed_req = TeamRequest(**req)
         parsed_dict = dataclasses.asdict(parsed_req)
         db.add_team(parsed_dict)
-        return {"team": parsed_dict}
+        return {"team": parsed_dict}, 201
     except TypeError as te:
         return {"message": str(te)}, 400
     except ValidationError as ve:
