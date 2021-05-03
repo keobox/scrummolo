@@ -8,8 +8,8 @@ from pydantic import ValidationError
 
 from scrummolo.repository.mem_repository import MemRepository
 from scrummolo.requests.team_request import TeamRequest
-from scrummolo.use_cases.find_teams_by_user_use_case import find_teams_by_user
 from scrummolo.use_cases.find_team_by_id_use_case import find_team_by_id
+from scrummolo.use_cases.find_teams_by_user_use_case import find_teams_by_user
 
 app = Flask(__name__)
 db = MemRepository(None)
