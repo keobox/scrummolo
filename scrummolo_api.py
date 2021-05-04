@@ -47,6 +47,8 @@ def create_team():
         return {"message": str(te)}, 400
     except ValidationError as ve:
         return {"message": str(ve)}, 400
+    except ValueError as ve:
+        return {"message": str(ve)}, 403
 
 
 @app.errorhandler(404)
