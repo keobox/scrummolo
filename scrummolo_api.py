@@ -8,6 +8,7 @@ from pydantic import ValidationError
 
 from scrummolo.repository.mem_repository import MemRepository
 from scrummolo.requests.team_request import TeamRequest
+from scrummolo.use_cases.add_team_use_case import add_team
 from scrummolo.use_cases.find_team_by_id_use_case import find_team_by_id
 from scrummolo.use_cases.find_teams_by_user_use_case import find_teams_by_user
 
@@ -40,7 +41,7 @@ def create_team():
         req["team_id"] = str(uuid.uuid4())
         parsed_req = TeamRequest(**req)
         parsed_dict = dataclasses.asdict(parsed_req)
-        db.add_team(parsed_dict)
+        add_team(db, parsed_dict)
         return {"team": parsed_dict}, 201
     except TypeError as te:
         return {"message": str(te)}, 400
