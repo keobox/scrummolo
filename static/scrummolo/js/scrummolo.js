@@ -35,15 +35,11 @@ function resizeImage(image) {
     image.displayHeight = dimensions[1];
 }
 
-function getPlayerAssetName(playerName) {
-    return playerName.replace(/\./, '').replace(/\s/, '_').toLowerCase();
-}
-
 // Game Logic
-
 var app = {
     width: 800,
     height: 600,
+    xMargin: 10,
     yMargin: 10,
     playerIndex: 0,
     questionIndex: 0,
@@ -52,11 +48,22 @@ var app = {
     isTimerElapsed: false,
     setConfig: function (config) {
         this.cfg = config;
-        this.questions = config.questions;
-        this.timerSeconds = config.duration * 60;
+    },
+    setTeam: function(team) {
+        this.team = team;
+        this.duration = team.duration;
+        this.questions = team.questions;
+        this.timerSeconds = team.duration * 60;
+        if (team.players.length > 0) {
+            this.players = shuffle(team.players);
+        } else {
+            var groups = team.groups;
+            groups.map(function(group) {shuffle(group)});
+            this.players = groups.flat();
+        }
     },
     getPlayer: function () {
-        return this.team[this.playerIndex];
+        return this.players[this.playerIndex];
     },
     getQuestion: function () {
         return this.questions[this.questionIndex];
@@ -64,11 +71,11 @@ var app = {
     step: function () {
         if (this.questionIndex < this.questions.length - 1) {
             this.questionIndex++;
-            if (this.playerIndex == this.team.length - 1 && this.questionIndex === this.questions.length - 1) {
+            if (this.playerIndex == this.players.length - 1 && this.questionIndex === this.questions.length - 1) {
                 this.gameOver = true;
             }
         } else {
-            if (this.playerIndex < this.team.length - 1) {
+            if (this.playerIndex < this.players.length - 1) {
                 this.questionIndex = 0;
                 this.playerIndex++;
             }
@@ -100,25 +107,27 @@ var gameLoop = new Phaser.Scene('gameLoop');
 
 gameLoop.preload = function () {
     app.game = this;
-    var team = shuffle(app.cfg.team);
-    app.team = team;
-    team.forEach(function (player) {
-        var imgPath = app.cfg.assets + '/' + getPlayerAssetName(player) + '.png';
-        app.game.load.image(player, imgPath);
-    });
-    app.game.load.image('gameOverImage', app.cfg.gameOverImage);
-    app.game.load.audio('gameOverSound', app.cfg.gameOverSound);
+    app.game.load.atlas(app.team.skin,
+                        app.cfg.assets + '/' + app.team.skin + '/' + app.team.skin + '.png',
+                        app.cfg.assets + '/' + app.team.skin + '/' + app.team.skin + '.json');
+    app.game.load.image('gameOverImage', app.cfg.assets + '/' + app.cfg.gameOverImage);
+    app.game.load.audio('gameOverSound', app.cfg.assets + '/' + app.cfg.gameOverSound);
 }
 
 gameLoop.create = function () {
-    var playerImage = app.game.add.image(app.width / 2, app.yMargin, app.team[0]).setOrigin(0, 0);
+    var frames = app.game.textures.get(app.team.skin).getFrameNames();
+    app.frames = frames
+    var playerImage = app.game.add.image(app.width / 2 + app.xMargin,
+                                         app.yMargin,
+                                         app.team.skin,
+                                         Phaser.Math.RND.pick(frames)).setOrigin(0, 0);
     resizeImage(playerImage);
     app.playerImage = playerImage;
     app.playerText = app.game.add.text(100, 100, app.getPlayer() + ', is your turn!', { font: '21px Arial', fill: '#fff' });
     app.questionsText = app.game.add.text(100, 500, app.getQuestion(), { font: '40px Arial', fill: '#fff' });
     app.spaceKey = app.game.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     app.gameOverSound = app.game.sound.add('gameOverSound');
-    app.timerText = app.game.add.text(100, 300, app.cfg.duration + ':00', { font: '36px Arial', fill: '#fff' });
+    app.timerText = app.game.add.text(100, 300, app.duration + ':00', { font: '36px Arial', fill: '#fff' });
     app.timer = this.time.addEvent({ delay: 1000, callback: app.tick, callbackScope: app, loop: true });
 }
 
@@ -127,9 +136,12 @@ gameLoop.update = function () {
         if (!app.gameOver) {
             app.step();
             app.questionsText.setText(app.getQuestion());
-            app.playerText.setText(app.getPlayer() + ', is your turn!');
-            app.playerImage.setTexture(app.getPlayer());
-            resizeImage(app.playerImage);
+            if (app.questionIndex == 0) {
+                app.playerText.setText(app.getPlayer() + ', is your turn!');
+                app.playerImage.setTexture(app.team.skin, Phaser.Math.RND.pick(app.frames));
+                app.playerImage.setOrigin(0, 0);
+                resizeImage(app.playerImage);
+            }
         } else {
             if (!app.isFinalScreenDisplayed) {
                 app.isFinalScreenDisplayed = true;
@@ -137,6 +149,7 @@ gameLoop.update = function () {
                 app.questionsText.destroy();
                 app.playerImage.destroy();
                 app.timerText.destroy();
+                app.timer.destroy();
                 app.game.add.text(100, 500, app.cfg.gameOverText, { font: '40px Arial', fill: '#fff' });
                 var gameOverImage = app.game.add.image(app.width / 2, app.yMargin, 'gameOverImage').setOrigin(0, 0);
                 resizeImage(gameOverImage);

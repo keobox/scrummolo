@@ -11,8 +11,9 @@ var game_engine_config = {
 // Game starts here, starting jQuery
 $(function() {
     // Get config data from REST API
-    $.getJSON('/team/1', function(data) {
-        app.setConfig(data.team);
+    $.getJSON('/js/config.json', function(data) {
+        app.setConfig(data.config)
+        app.setTeam(data.teams[0]);
         $('#loading').fadeOut('slow');
         new Phaser.Game(game_engine_config);
     });

@@ -59,8 +59,10 @@ target/
 # Misc
 .DS_Store
 assets/
+config.json
 *.bak
 .vscode/
+.idea/
 
 # JS local libs
 jquery-3.3.1.*
