@@ -54,13 +54,7 @@ var app = {
         this.duration = team.duration;
         this.questions = team.questions;
         this.timerSeconds = team.duration * 60;
-        if (team.players.length > 0) {
-            this.players = shuffle(team.players);
-        } else {
-            var groups = team.groups;
-            groups.map(function(group) {shuffle(group)});
-            this.players = groups.flat();
-        }
+        this.players = shuffle(team.players);
     },
     getPlayer: function () {
         return this.players[this.playerIndex];
