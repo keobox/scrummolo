@@ -1,4 +1,4 @@
 #!/bin/bash
 
-cd static/scrummolo
+cd static/src
 python3 -m http.server
