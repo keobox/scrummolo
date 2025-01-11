@@ -100,28 +100,26 @@ var app = {
 var gameLoop = new Phaser.Scene('gameLoop');
 
 gameLoop.preload = function () {
-    app.game = this;
-    app.game.load.atlas(app.team.skin,
-                        app.cfg.assets + '/' + app.team.skin + '/' + app.team.skin + '.png',
-                        app.cfg.assets + '/' + app.team.skin + '/' + app.team.skin + '.json');
-    app.game.load.image('gameOverImage', app.cfg.assets + '/' + app.cfg.gameOverImage);
-    app.game.load.audio('gameOverSound', app.cfg.assets + '/' + app.cfg.gameOverSound);
+    this.load.atlas(app.team.skin,
+                    app.cfg.assets + '/' + app.team.skin + '/' + app.team.skin + '.png',
+                    app.cfg.assets + '/' + app.team.skin + '/' + app.team.skin + '.json');
+    this.load.image('gameOverImage', app.cfg.assets + '/' + app.cfg.gameOverImage);
+    this.load.audio('gameOverSound', app.cfg.assets + '/' + app.cfg.gameOverSound);
 }
 
 gameLoop.create = function () {
-    var frames = app.game.textures.get(app.team.skin).getFrameNames();
-    app.frames = frames
-    var playerImage = app.game.add.image(app.width / 2 + app.xMargin,
-                                         app.yMargin,
-                                         app.team.skin,
-                                         Phaser.Math.RND.pick(frames)).setOrigin(0, 0);
+    app.frames = this.textures.get(app.team.skin).getFrameNames();
+    var playerImage = this.add.image(app.width / 2 + app.xMargin,
+                                     app.yMargin,
+                                     app.team.skin,
+                                     Phaser.Math.RND.pick(frames)).setOrigin(0, 0);
     resizeImage(playerImage);
     app.playerImage = playerImage;
-    app.playerText = app.game.add.text(100, 100, app.getPlayer() + ', is your turn!', { font: '21px Arial', fill: '#fff' });
-    app.questionsText = app.game.add.text(100, 500, app.getQuestion(), { font: '40px Arial', fill: '#fff' });
-    app.spaceKey = app.game.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-    app.gameOverSound = app.game.sound.add('gameOverSound');
-    app.timerText = app.game.add.text(100, 300, app.duration + ':00', { font: '36px Arial', fill: '#fff' });
+    app.playerText = this.add.text(100, 100, app.getPlayer() + ', is your turn!', { font: '21px Arial', fill: '#fff' });
+    app.questionsText = this.add.text(100, 500, app.getQuestion(), { font: '40px Arial', fill: '#fff' });
+    app.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+    app.gameOverSound = this.sound.add('gameOverSound');
+    app.timerText = this.add.text(100, 300, app.duration + ':00', { font: '36px Arial', fill: '#fff' });
     app.timer = this.time.addEvent({ delay: 1000, callback: app.tick, callbackScope: app, loop: true });
 }
 
@@ -144,8 +142,8 @@ gameLoop.update = function () {
                 app.playerImage.destroy();
                 app.timerText.destroy();
                 app.timer.destroy();
-                app.game.add.text(100, 500, app.cfg.gameOverText, { font: '40px Arial', fill: '#fff' });
-                var gameOverImage = app.game.add.image(app.width / 2, app.yMargin, 'gameOverImage').setOrigin(0, 0);
+                this.add.text(100, 500, app.cfg.gameOverText, { font: '40px Arial', fill: '#fff' });
+                var gameOverImage = this.add.image(app.width / 2, app.yMargin, 'gameOverImage').setOrigin(0, 0);
                 resizeImage(gameOverImage);
                 app.gameOverSound.play();
             }
