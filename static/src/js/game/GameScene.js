@@ -4,6 +4,7 @@ import { resizeImage } from '../utils/image-utils.js';
 export class GameScene extends Phaser.Scene {
     /** @type {GameState} */
     #gameState;
+    #lastPointerUp = false;
 
     /**
      * @param {GameState} gameState Game state instance
@@ -35,7 +36,7 @@ export class GameScene extends Phaser.Scene {
 
     create() {
         this.setupGame();
-        this.setupInput();
+        this.setupInputs();
         this.setupTimer();
     }
 
@@ -89,10 +90,27 @@ export class GameScene extends Phaser.Scene {
         );
     }
 
-    setupInput() {
-        this.#gameState.spaceKey = this.input.keyboard.addKey(
-            Phaser.Input.Keyboard.KeyCodes.SPACE
+    setupInputs() {
+        // Setup keyboard input
+        this.#gameState.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
+        // Setup pointer/touch input for the entire game area
+        const advanceArea = this.add.rectangle(
+            0,
+            0,
+            this.cameras.main.width,
+            this.cameras.main.height,
+            0x000000,
+            0  // Fully transparent
         );
+        advanceArea.setOrigin(0, 0);
+        advanceArea.setInteractive();
+
+        // Add pointer up event (works for both mouse click and touch)
+        // using the Phaser3 event handler this is way is not handled in update
+        advanceArea.on('pointerup', () => {
+            this.handleAdvanceGame();
+        });
     }
 
     setupTimer() {
@@ -113,14 +131,19 @@ export class GameScene extends Phaser.Scene {
     }
 
     update() {
-        const gameState  = this.#gameState;
+        // Check for keyboard input
+        if (Phaser.Input.Keyboard.JustDown(this.#gameState.spaceKey)) {
+            this.handleAdvanceGame();
+        }
+    }
 
-        if (Phaser.Input.Keyboard.JustDown(gameState.spaceKey)) {
-            if (!gameState.gameOver) {
-                this.handleGameStep();
-            } else if (!gameState.isFinalScreenDisplayed) {
-                this.showGameOver();
-            }
+    handleAdvanceGame() {
+        const gameState = this.#gameState;
+
+        if (!gameState.gameOver) {
+            this.handleGameStep();
+        } else if (!gameState.isFinalScreenDisplayed) {
+            this.showGameOver();
         }
     }
 
