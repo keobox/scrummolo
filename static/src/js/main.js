@@ -1,20 +1,19 @@
+import { GameState } from './game/GameState.js';
+import { createGameConfig } from './config/game-config.js';
 
-// Game engine configuration
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        const response = await fetch('/js/config.json');
+        const data = await response.json();
 
-var game_engine_config = {
-    type: Phaser.AUTO,
-    width: app.width,
-    height: app.height,
-    scene: [gameLoop]
-}
+        const gameState = new GameState();
+        gameState.setConfig(data.config);
+        gameState.setTeam(data.teams[0]);
+        
+        document.getElementById('loading').style.display = 'none';
 
-// Game starts here, starting jQuery
-$(function() {
-    // Get config data from REST API
-    $.getJSON('/js/config.json', function(data) {
-        app.setConfig(data.config)
-        app.setTeam(data.teams[0]);
-        $('#loading').fadeOut('slow');
-        new Phaser.Game(game_engine_config);
-    });
+        new Phaser.Game(createGameConfig(gameState));
+    } catch (error) {
+        console.error('Failed to initialize game:', error);
+    }
 });
