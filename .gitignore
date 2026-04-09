@@ -76,3 +76,6 @@ package.json
 
 # Pipenv
 Pipfile.lock
+
+# Opencode
+.opencode/
