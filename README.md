@@ -10,7 +10,7 @@ Purpose:
 ## Local AI assisted
 Using opencode in a container and ollama on a Mac M4 48 GB RAM.
 
-Add this
+### Configuration
 ```shell
 # Create a hidden config folder in your current project
 mkdir .opencode
@@ -34,11 +34,20 @@ cat <<EOF > .opencode/opencode.json
 EOF
 ```
 
-To run in a container
+### To build the container
 ```shell
-podman run -it --rm \
+podman build -t opencode-python .
+```
+
+### To run in a container
+```shell
+alias opencode='podman run -it --rm \
+  -p 5000:5000 \
   -v "$(pwd)":/app \
   -w /app \
   -e OPENCODE_CONFIG_DIR=/app/.opencode \
-  ghcr.io/anomalyco/opencode
+  -e FLASK_APP=scrummolo_api.py \
+  opencode-python'
+
+  opencode
 ```

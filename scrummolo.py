@@ -1,5 +1,7 @@
 "A virtual talking stick."
 
+# This is a deprecated PoC.
+
 from datetime import datetime
 from random import shuffle
 
