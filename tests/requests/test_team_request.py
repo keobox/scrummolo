@@ -36,7 +36,7 @@ def test_team_request_missing_field():
         "questions": ["Where doc Hell is?"],
         "players": ["Koji", "Sayaka"],
     }
-    with pytest.raises(TypeError) as ex:
+    with pytest.raises(pydantic.ValidationError) as ex:
         TeamRequest(**data)
     assert ex
 
