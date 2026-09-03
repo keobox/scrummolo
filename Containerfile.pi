@@ -2,8 +2,10 @@ FROM node:24-bookworm-slim
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-        bash ca-certificates git ripgrep curl \
+        bash ca-certificates git ripgrep curl python3 \
     && rm -rf /var/lib/apt/lists/*
+
+RUN curl -LsSf https://astral.sh/uv/install.sh | UV_INSTALL_DIR=/usr/local/bin sh
 
 RUN npm install -g --ignore-scripts @earendil-works/pi-coding-agent
 
