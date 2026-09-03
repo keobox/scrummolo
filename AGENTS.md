@@ -161,6 +161,10 @@ static/src/
 - **GameState** owns the game logic (who plays next, what question, timer). **GameScene** owns the rendering and input. Keep this separation.
 - Assets (sprites, sounds, images) go in the `static/` directory alongside `src/`.
 
+## Communication
+
+Be concise. Do not overthink; skip verbose explanations unless asked.
+
 ## Future features (not yet implemented)
 
 - **Team management**: add a development team by choosing member names and avatar images.
