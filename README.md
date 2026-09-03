@@ -51,3 +51,55 @@ alias opencode='podman run -it --rm \
 
   opencode
 ```
+
+## Using pi-harness
+Opencode didn't look OK in the containerized environment, so I decided to give Pi a try.
+Look at `Containerfile.pi`
+
+### Configuration
+
+pi-config/models.json
+```shell
+{
+  "providers": {
+    "ollama": {
+      "baseUrl": "http://host.docker.internal:11434/v1",
+      "api": "openai-completions",
+      "apiKey": "not-needed",
+      "models": [
+        {
+          "id": "hf.co/unsloth/Qwen3.8-27B-GGUF:UD-Q6_K",
+          "name": "Qwen3.8 27B (Q6_K, 22GB)",
+          "reasoning": false,
+          "input": ["text"],
+          "contextWindow": 128000,
+          "maxTokens": 16384
+        }
+      ]
+    }
+  }
+}
+```
+
+pi-config/settings.json
+```shell
+{
+  "defaultProvider": "ollama",
+  "defaultModel": "hf.co/unsloth/Qwen3.8-27B-GGUF:UD-Q6_K",
+  "defaultAgent": "coder"
+}
+```
+
+### To build the container
+```shell
+podman build -t pi-harness -f Containerfile.pi .
+```
+
+### To run in a container
+```shell
+# host.docker.internal resolves to your host (where Ollama runs)
+podman run --rm -it \
+  -v "$PWD:/workspace" \
+  -v "$PWD/pi-config:/root/.pi/agent" \
+  pi-harness
+```
