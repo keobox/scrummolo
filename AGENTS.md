@@ -2,6 +2,15 @@
 
 Scrummolo is a "talking stick" web application for standup meetings. It cycles through team members, presenting each one with timed standup questions in a fun, game-like interface.
 
+## Environment
+
+The harness tool runs either in a Linux podman container (on Mac) or directly on the macOS host. The setup can change between sessions, so detect before assuming platform conventions:
+
+- `[ -f /run/.containerenv ] || [ -f /.dockerenv ] || [ -n "$container" ]` → containerized (current Mac container also sets `$container=podman`).
+- `uname -s` = `Darwin` → macOS host.
+
+When the signals conflict or are absent, ask the user rather than guessing.
+
 ## Architecture
 
 The backend follows **Clean Architecture** (Robert C. Martin). Each layer lives in its own package under `scrummolo/`:
