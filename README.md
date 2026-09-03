@@ -18,21 +18,41 @@ mkdir .opencode
 # Create the config file locally
 cat <<EOF > .opencode/opencode.json
 {
+  "$schema": "https://opencode.ai/config.json",
+  "model": "ollama-host/hf.co/unsloth/Qwen3.8-27B-GGUF:UD-Q6_K",
+  "compaction": {
+    "auto": true,
+    "prune": true,
+    "reserved": 10000
+  },
   "provider": {
     "ollama": {
       "npm": "@ai-sdk/openai-compatible",
+      "name": "Ollama (container)",
       "options": {
         "baseURL": "http://host.containers.internal:11434/v1"
       },
       "models": {
-        "qwen3.5:latest": { "name": "qwen3.5:latest" }
+        "hf.co/unsloth/Qwen3.8-27B-GGUF:UD-Q6_K": { "name": "hf.co/unsloth/Qwen3.8-27B-GGUF:UD-Q6_K" }
+      }
+    },
+    "ollama-host": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Ollama (local)",
+      "options": {
+        "baseURL": "http://localhost:11434/v1"
+      },
+      "models": {
+        "hf.co/unsloth/Qwen3.8-27B-GGUF:UD-Q6_K": { "name": "hf.co/unsloth/Qwen3.8-27B-GGUF:UD-Q6_K" }
       }
     }
-  },
-  "instructions": "Always use 'uv run' to execute python scripts. Use 'uv add' to install new dependencies."
+  }
 }
 EOF
 ```
+
+NOTE: "Ollama (container)" provider is for the containerized opencode while "Ollama (local)" is for opencode installed on the host.
+I did this because the containerized opencode does not work great in the Mac terminal.
 
 ### To build the container
 ```shell
