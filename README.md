@@ -88,8 +88,8 @@ pi-config/models.json
       "apiKey": "not-needed",
       "models": [
         {
-          "id": "hf.co/unsloth/Qwen3.8-27B-GGUF:UD-Q6_K",
-          "name": "Qwen3.8 27B (Q6_K, 22GB)",
+          "id": "qwen3-coder:30b",
+          "name": "qwen3 coder 30b (18 GB)",
           "reasoning": false,
           "input": ["text"],
           "contextWindow": 128000,
@@ -105,7 +105,7 @@ pi-config/settings.json
 ```shell
 {
   "defaultProvider": "ollama",
-  "defaultModel": "hf.co/unsloth/Qwen3.8-27B-GGUF:UD-Q6_K",
+  "defaultModel": "qwen3-coder:30b",
   "defaultAgent": "coder"
 }
 ```
